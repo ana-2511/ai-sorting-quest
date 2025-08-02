@@ -1,0 +1,55 @@
+
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="UTF-8">
+          <title>Unsupervised Learning Game</title>
+          <style>
+            .fruit { width: 100px; height: 100px; margin: 10px; cursor: move; border-radius: 12px; }
+            .bin { width: 160px; height: 200px; border: 3px dashed #888; display: inline-block; margin: 20px; padding: 10px; border-radius: 10px; background: #f2f2f2; vertical-align: top; }
+          </style>
+        </head>
+        <body>
+          <h2>🍍 Drag each fruit into one of 3 groups</h2>
+          <div><img src="game_assets/f1.jpg" class="fruit" id="f1" draggable="true" ondragstart="drag(event)"><img src="game_assets/f2.jpg" class="fruit" id="f2" draggable="true" ondragstart="drag(event)"><img src="game_assets/f3.jpg" class="fruit" id="f3" draggable="true" ondragstart="drag(event)"><img src="game_assets/f4.jpg" class="fruit" id="f4" draggable="true" ondragstart="drag(event)"><img src="game_assets/f5.jpg" class="fruit" id="f5" draggable="true" ondragstart="drag(event)"><img src="game_assets/f6.jpg" class="fruit" id="f6" draggable="true" ondragstart="drag(event)"></div>
+    
+          <h3>🗂️ Drop fruits here:</h3>
+          <div id="bin1" class="bin" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+          <div id="bin2" class="bin" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+          <div id="bin3" class="bin" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    
+          <br><button onclick="checkResult()">✅ Submit</button>
+    
+          <script>
+            function allowDrop(ev) { ev.preventDefault(); }
+            function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
+            function drop(ev) {
+              ev.preventDefault();
+              const data = ev.dataTransfer.getData("text");
+              ev.target.appendChild(document.getElementById(data));
+            }
+            function arraysMatch(a, b) {
+              return a.length === b.length && a.every(item => b.includes(item));
+            }
+            function checkResult() {
+              const correct = { "bin1": ['f1', 'f4'],
+                                "bin2": ['f2', 'f5'],
+                                "bin3": ['f3', 'f6'] };
+              let correctCount = 0;
+              for (let bin in correct) {
+                const actual = Array.from(document.getElementById(bin).children).map(el => el.id);
+                if (arraysMatch(actual, correct[bin])) {
+                  alert(`✅ Grouping in ${bin} is correct!`);
+                  correctCount++;
+                } else {
+                  alert(`❌ Grouping in ${bin} is incorrect.`);
+                }
+              }
+              if (correctCount === 3) {
+                alert("🎉 Excellent! You grouped everything perfectly. That's how unsupervised learning works!");
+              }
+            }
+          </script>
+        </body>
+        </html>
+        
