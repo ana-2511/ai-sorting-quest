@@ -90,7 +90,7 @@ else:
                 sample_img = random.choice(os.listdir(os.path.join(IMAGE_DIR, cls)))
                 #img_path = os.path.join(IMAGE_DIR, cls, random.choice(os.listdir(os.path.join(IMAGE_DIR, cls))))
                 with cols[idx % 5]:
-                    st.image(os.path.join(IMAGE_DIR, cls, sample_img), caption=cls, use_column_width=True)
+                    st.image(os.path.join(IMAGE_DIR, cls, sample_img), caption=cls, use_container_width=True)
 
             if st.button("Next → Let's Test AI!"):
                 st.session_state.supervised_stage = 1
